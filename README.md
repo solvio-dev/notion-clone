@@ -69,9 +69,18 @@ Macデスクトップアプリとして動作する、個人利用向けのNotio
 - 10色カラーパレット
 - Notion風スクロールバー
 
+## 前提条件
+
+- **Rust 1.85.0以上** (`rustup update stable` で更新)
+- **Node.js 20以上**
+- **pnpm**
+
 ## 開発
 
 ```bash
+# Rustを最新に更新（1.85.0以上が必要）
+rustup update stable
+
 # 依存関係インストール
 pnpm install
 
