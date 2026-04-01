@@ -1,0 +1,24 @@
+# 依存関係
+node_modules/
+
+# ビルド出力
+dist/
+src-tauri/target/
+
+# 環境変数
+.env
+.env.*
+
+# エディタ
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ログ
+*.log

@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+@theme {
+  /* Notionカラーパレット - ライトモード */
+  --color-notion-bg: #FFFFFF;
+  --color-notion-sidebar: #F7F6F3;
+  --color-notion-text: #37352F;
+  --color-notion-secondary: #787774;
+  --color-notion-border: #E9E9E7;
+  --color-notion-hover: #EFEFEF;
+  --color-notion-selected: #E8E8E8;
+
+  /* Notion 10色パレット - テキスト */
+  --color-notion-gray: #787774;
+  --color-notion-brown: #9F6B53;
+  --color-notion-orange: #D9730D;
+  --color-notion-yellow: #CB912F;
+  --color-notion-green: #448361;
+  --color-notion-blue: #337EA9;
+  --color-notion-purple: #9065B0;
+  --color-notion-pink: #C14C8A;
+  --color-notion-red: #D44C47;
+
+  /* Notion 10色パレット - 背景 */
+  --color-notion-gray-bg: #F1F1EF;
+  --color-notion-brown-bg: #F4EEEE;
+  --color-notion-orange-bg: #FBECDD;
+  --color-notion-yellow-bg: #FBF3DB;
+  --color-notion-green-bg: #EDF3EC;
+  --color-notion-blue-bg: #E7F3F8;
+  --color-notion-purple-bg: #F4F0F7;
+  --color-notion-pink-bg: #F9EEF3;
+  --color-notion-red-bg: #FDEBEC;
+
+  /* フォント */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-serif: Lyon-Text, Georgia, ui-serif, serif;
+  --font-mono: iawriter-mono, Nitti, Menlo, Courier, monospace;
+}
+
+/* ダークモード */
+.dark {
+  --color-notion-bg: #191919;
+  --color-notion-sidebar: #252525;
+  --color-notion-text: rgba(255, 255, 255, 0.81);
+  --color-notion-secondary: rgba(255, 255, 255, 0.44);
+  --color-notion-border: rgba(255, 255, 255, 0.094);
+  --color-notion-hover: rgba(255, 255, 255, 0.055);
+  --color-notion-selected: rgba(255, 255, 255, 0.094);
+
+  /* ダークモード 10色パレット - テキスト */
+  --color-notion-gray: #979A9B;
+  --color-notion-brown: #B4836A;
+  --color-notion-orange: #C77D48;
+  --color-notion-yellow: #CA9849;
+  --color-notion-green: #529E72;
+  --color-notion-blue: #5B98BD;
+  --color-notion-purple: #9A6DD7;
+  --color-notion-pink: #C95DA1;
+  --color-notion-red: #E06B6C;
+
+  /* ダークモード 10色パレット - 背景 */
+  --color-notion-gray-bg: #363636;
+  --color-notion-brown-bg: #3E2D21;
+  --color-notion-orange-bg: #49290E;
+  --color-notion-yellow-bg: #3C2E0E;
+  --color-notion-green-bg: #1E3A29;
+  --color-notion-blue-bg: #15303F;
+  --color-notion-purple-bg: #2E1F40;
+  --color-notion-pink-bg: #3A1C30;
+  --color-notion-red-bg: #3D1E1E;
+}
+
+/* ベースリセット */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* スクロールバー（Notion風） */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-notion-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-notion-secondary);
+}
+
+/* 選択色 */
+::selection {
+  background: rgba(45, 170, 219, 0.3);
+}
