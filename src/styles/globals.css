@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  /* Notionカラーパレット - ライトモード（rgba系で柔らかく） */
+  /* Notionカラーパレット - ライトモード */
   --color-notion-bg: #ffffff;
-  --color-notion-sidebar: #f7f7f5;
-  --color-notion-text: rgba(55, 53, 47, 0.88);
+  --color-notion-sidebar: #f7f6f3;
+  --color-notion-text: rgb(55, 53, 47);
   --color-notion-secondary: rgba(55, 53, 47, 0.65);
-  --color-notion-tertiary: rgba(55, 53, 47, 0.38);
+  --color-notion-tertiary: rgba(55, 53, 47, 0.3);
   --color-notion-border: rgba(55, 53, 47, 0.09);
-  --color-notion-hover: rgba(55, 53, 47, 0.04);
-  --color-notion-selected: rgba(55, 53, 47, 0.06);
+  --color-notion-hover: rgba(55, 53, 47, 0.08);
+  --color-notion-selected: rgba(55, 53, 47, 0.08);
 
   /* Notion 10色パレット - テキスト */
   --color-notion-gray: #787774;
@@ -47,7 +47,7 @@
   --color-notion-secondary: rgba(255, 255, 255, 0.44);
   --color-notion-tertiary: rgba(255, 255, 255, 0.28);
   --color-notion-border: rgba(255, 255, 255, 0.08);
-  --color-notion-hover: rgba(255, 255, 255, 0.04);
+  --color-notion-hover: rgba(255, 255, 255, 0.06);
   --color-notion-selected: rgba(255, 255, 255, 0.06);
 
   /* ダークモード 10色パレット - テキスト */
@@ -114,12 +114,12 @@ textarea {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-notion-border);
+  background: rgba(55, 53, 47, 0.12);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-notion-secondary);
+  background: rgba(55, 53, 47, 0.2);
 }
 
 /* 選択色 */
@@ -127,7 +127,10 @@ textarea {
   background: rgba(45, 170, 219, 0.3);
 }
 
-/* BlockNote カスタマイズ - Notion風 */
+/* ============================================ */
+/* BlockNote カスタマイズ - Notion準拠           */
+/* ============================================ */
+
 .blocknote-wrapper {
   min-height: 200px;
 }
@@ -139,43 +142,49 @@ textarea {
 
 .blocknote-wrapper .bn-editor {
   font-family: var(--font-sans);
-  color: var(--color-notion-text);
+  color: rgb(55, 53, 47);
   padding-inline: 0;
   background-color: transparent;
 }
 
-.blocknote-wrapper .bn-editor [class*="blockContent"] {
-  font-size: 16px;
-  line-height: 1.5;
-  padding: 3px 2px;
+/* ブロックコンテンツ */
+.blocknote-wrapper .bn-block-outer {
+  margin: 0;
 }
 
-/* 見出しサイズ - Notion準拠 */
+.blocknote-wrapper .bn-editor [class*="blockContent"] {
+  font-size: 16px;
+  line-height: 24px;
+  padding: 3px 2px;
+  color: rgb(55, 53, 47);
+}
+
+/* 見出し - Notion準拠の固定値 */
 .blocknote-wrapper .bn-editor h1 {
   font-size: 30px;
-  line-height: 1.15;
-  margin-top: 1.6em;
-  margin-bottom: 0.2em;
-  font-weight: 700;
+  line-height: 39px;
+  margin-top: 32px;
+  margin-bottom: 4px;
+  font-weight: 600;
 }
 
 .blocknote-wrapper .bn-editor h2 {
   font-size: 24px;
-  line-height: 1.2;
-  margin-top: 1.3em;
-  margin-bottom: 0.15em;
+  line-height: 31.2px;
+  margin-top: 32px;
+  margin-bottom: 4px;
   font-weight: 600;
 }
 
 .blocknote-wrapper .bn-editor h3 {
   font-size: 20px;
-  line-height: 1.25;
-  margin-top: 1em;
-  margin-bottom: 0.1em;
+  line-height: 26px;
+  margin-top: 32px;
+  margin-bottom: 4px;
   font-weight: 600;
 }
 
-/* BlockNoteのサイドメニュー（ドラッグハンドル） */
+/* ドラッグハンドル */
 .blocknote-wrapper .bn-side-menu {
   opacity: 0;
   transition: opacity 0.15s ease;
@@ -189,17 +198,55 @@ textarea {
   opacity: 1;
 }
 
-/* BlockNote ツールバー・メニュー */
-.blocknote-wrapper [class*="mantine-Menu"] {
-  border: 1px solid var(--color-notion-border);
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
-}
-
 /* プレースホルダー */
 .blocknote-wrapper [class*="isEmpty"] [data-placeholder]::before {
-  color: var(--color-notion-secondary);
-  opacity: 0.38;
+  color: rgba(55, 53, 47, 0.3);
+  opacity: 1;
+}
+
+/* スラッシュメニュー - Notion準拠 */
+.blocknote-wrapper .bn-suggestion-menu,
+.blocknote-wrapper .bn-menu-dropdown,
+.blocknote-wrapper [class*="mantine-Menu"] {
+  width: 336px;
+  max-width: calc(100vw - 32px);
+  padding: 6px;
+  border: 1px solid rgba(55, 53, 47, 0.09);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.10),
+    0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.blocknote-wrapper .bn-suggestion-menu-item {
+  min-height: 36px;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+.blocknote-wrapper .bn-suggestion-menu-item[aria-selected="true"] {
+  background: rgba(55, 53, 47, 0.08);
+}
+
+.blocknote-wrapper .bn-mt-suggestion-menu-item-title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: rgb(55, 53, 47);
+}
+
+.blocknote-wrapper .bn-mt-suggestion-menu-item-subtitle {
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(55, 53, 47, 0.6);
+}
+
+.blocknote-wrapper .bn-suggestion-menu-label {
+  padding: 6px 10px 4px;
+  font-size: 11px;
+  line-height: 16px;
+  color: rgba(55, 53, 47, 0.6);
 }
 
 /* フォントスタイル切替 */

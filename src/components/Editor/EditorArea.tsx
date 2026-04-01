@@ -73,7 +73,7 @@ export function EditorArea({
 
   return (
     <div className={`flex-1 overflow-y-auto ${fontClass}`}>
-      <div className="max-w-[900px] mx-auto px-[96px] pt-[72px] pb-32">
+      <div className="max-w-[912px] mx-auto px-[96px] pt-[72px] pb-32">
         {/* カバー画像 */}
         {page.cover_image && (
           <div className="h-[220px] mb-7 -mx-[96px] overflow-hidden">
@@ -99,7 +99,7 @@ export function EditorArea({
           onChange={(e) => onUpdateTitle(e.target.value)}
           onKeyDown={handleTitleKeyDown}
           placeholder="無題"
-          className="w-full text-[40px] font-[600] leading-[1.05] tracking-[-0.03em] bg-transparent border-none outline-none text-notion-text placeholder:text-notion-tertiary mb-3"
+          className="w-full text-[40px] font-[700] leading-[48px] tracking-[-0.02em] bg-transparent border-none outline-none text-[#37352F] placeholder:text-[rgba(55,53,47,0.3)] mb-1 caret-[#37352F]"
         />
 
         {/* BlockNoteエディタ */}
