@@ -183,23 +183,37 @@ function App() {
 
       {/* メイン領域 */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* ツールバー */}
-        <div className="flex items-center justify-between px-4 py-1 text-xs text-notion-secondary border-b border-notion-border">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setGithubOpen(true)}
-              className="hover:text-notion-text transition-colors"
-              title="GitHub連携"
-            >
-              GitHub
-            </button>
-          </div>
-          <div>
-            {saveStatus === "saving" && <span>保存中...</span>}
-            {saveStatus === "saved" && <span>保存済み</span>}
-            {saveStatus === "error" && (
-              <span className="text-notion-red">保存エラー</span>
-            )}
+        {/* ヘッダーバー */}
+        <div className="h-[44px] border-b border-notion-border/50 flex-shrink-0">
+          <div className="h-full max-w-[900px] mx-auto px-12 flex items-center justify-between">
+            <div className="min-w-0 flex items-center gap-2 text-[13px] text-notion-secondary">
+              {currentPage && (
+                <>
+                  <span className="opacity-70">{currentPage.icon || "📄"}</span>
+                  <span className="truncate text-notion-text/85">
+                    {currentPage.title || "無題"}
+                  </span>
+                </>
+              )}
+            </div>
+            <div className="flex items-center gap-2 text-[12px] text-notion-secondary">
+              {saveStatus === "saving" && (
+                <span className="opacity-60">保存中...</span>
+              )}
+              {saveStatus === "saved" && (
+                <span className="opacity-40">保存済み</span>
+              )}
+              {saveStatus === "error" && (
+                <span className="text-notion-red">保存エラー</span>
+              )}
+              <button
+                onClick={() => setGithubOpen(true)}
+                className="h-7 px-2.5 rounded-md hover:bg-notion-hover hover:text-notion-text transition-colors"
+                title="GitHub連携"
+              >
+                GitHub
+              </button>
+            </div>
           </div>
         </div>
 

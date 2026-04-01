@@ -40,7 +40,9 @@ export function EditorArea({
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="text-notion-secondary text-sm">読み込み中...</div>
+        <div className="text-notion-secondary text-[13px] animate-pulse">
+          読み込み中...
+        </div>
       </div>
     );
   }
@@ -50,25 +52,29 @@ export function EditorArea({
     return (
       <div className="flex-1 flex items-center justify-center text-notion-secondary">
         <div className="text-center">
-          <p className="text-lg">ページを選択するか、新規作成してください</p>
-          <p className="text-sm mt-2 opacity-60">Cmd+N で新規ページを作成</p>
+          <div className="text-4xl mb-4 opacity-20">📝</div>
+          <p className="text-[15px]">ページを選択するか、新規作成してください</p>
+          <p className="text-[13px] mt-2 opacity-50">
+            Cmd+N で新規ページを作成
+          </p>
         </div>
       </div>
     );
   }
 
-  const fontClass = page.font_style === "serif"
-    ? "font-serif"
-    : page.font_style === "mono"
-      ? "font-mono"
-      : "";
+  const fontClass =
+    page.font_style === "serif"
+      ? "font-serif"
+      : page.font_style === "mono"
+        ? "font-mono"
+        : "";
 
   return (
     <div className={`flex-1 overflow-y-auto ${fontClass}`}>
-      <div className="max-w-[900px] mx-auto px-24 py-20">
+      <div className="max-w-[900px] mx-auto px-12 pt-10 pb-28">
         {/* カバー画像 */}
         {page.cover_image && (
-          <div className="w-full h-[200px] mb-8 rounded overflow-hidden">
+          <div className="w-full h-[200px] mb-6 -mx-16 rounded-none overflow-hidden">
             <img
               src={page.cover_image}
               alt=""
@@ -78,8 +84,8 @@ export function EditorArea({
         )}
 
         {/* アイコン */}
-        <div className="mb-2">
-          <button className="text-6xl hover:bg-notion-hover rounded p-1 transition-colors">
+        <div className="mb-1 -ml-1">
+          <button className="text-[52px] leading-none hover:bg-notion-hover rounded-[4px] p-1 transition-colors">
             {page.icon || "📄"}
           </button>
         </div>
@@ -91,7 +97,7 @@ export function EditorArea({
           onChange={(e) => onUpdateTitle(e.target.value)}
           onKeyDown={handleTitleKeyDown}
           placeholder="無題"
-          className="w-full text-4xl font-bold bg-transparent border-none outline-none text-notion-text placeholder:text-notion-text/20 mb-4"
+          className="w-full text-[38px] font-[700] leading-[1.1] tracking-[-0.02em] bg-transparent border-none outline-none text-notion-text placeholder:text-notion-text/20 mb-3"
         />
 
         {/* BlockNoteエディタ */}

@@ -87,7 +87,7 @@ export function TerminalPanel({ isOpen, onClose, theme }: TerminalPanelProps) {
     >
       {/* リサイズハンドル */}
       <div
-        className="h-1 cursor-row-resize hover:bg-notion-blue/30 transition-colors"
+        className="h-[3px] cursor-row-resize hover:bg-notion-secondary/20 active:bg-notion-secondary/30 transition-colors"
         onMouseDown={handleResizeStart}
       />
 

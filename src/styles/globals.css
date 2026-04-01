@@ -7,8 +7,8 @@
   --color-notion-text: #37352F;
   --color-notion-secondary: #787774;
   --color-notion-border: #E9E9E7;
-  --color-notion-hover: #EFEFEF;
-  --color-notion-selected: #E8E8E8;
+  --color-notion-hover: #f1f1ef;
+  --color-notion-selected: #ebeae6;
 
   /* Notion 10色パレット - テキスト */
   --color-notion-gray: #787774;
@@ -119,14 +119,45 @@ body {
   min-height: 200px;
 }
 
+.blocknote-wrapper .bn-container {
+  font-family: var(--font-sans);
+}
+
 .blocknote-wrapper .bn-editor {
   font-family: var(--font-sans);
   color: var(--color-notion-text);
+  padding: 0;
 }
 
 .blocknote-wrapper .bn-editor [class*="blockContent"] {
   font-size: 16px;
-  line-height: 1.5;
+  line-height: 1.55;
+  padding: 1px 0;
+}
+
+/* 見出しサイズ - Notion準拠 */
+.blocknote-wrapper .bn-editor h1 {
+  font-size: 30px;
+  line-height: 1.15;
+  margin-top: 1.6em;
+  margin-bottom: 0.2em;
+  font-weight: 700;
+}
+
+.blocknote-wrapper .bn-editor h2 {
+  font-size: 24px;
+  line-height: 1.2;
+  margin-top: 1.3em;
+  margin-bottom: 0.15em;
+  font-weight: 600;
+}
+
+.blocknote-wrapper .bn-editor h3 {
+  font-size: 20px;
+  line-height: 1.25;
+  margin-top: 1em;
+  margin-bottom: 0.1em;
+  font-weight: 600;
 }
 
 /* BlockNoteのサイドメニュー（ドラッグハンドル） */
@@ -136,14 +167,33 @@ body {
 }
 
 .blocknote-wrapper [class*="blockOuter"]:hover .bn-side-menu {
+  opacity: 0.6;
+}
+
+.blocknote-wrapper .bn-side-menu:hover {
   opacity: 1;
 }
 
+/* BlockNote ツールバー・メニュー */
+.blocknote-wrapper [class*="mantine-Menu"] {
+  border: 1px solid var(--color-notion-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* プレースホルダー */
+.blocknote-wrapper [class*="isEmpty"] [data-placeholder]::before {
+  color: var(--color-notion-secondary);
+  opacity: 0.38;
+}
+
 /* フォントスタイル切替 */
-.font-serif .blocknote-wrapper .bn-editor {
+.font-serif .blocknote-wrapper .bn-editor,
+.font-serif .blocknote-wrapper .bn-container {
   font-family: var(--font-serif);
 }
 
-.font-mono .blocknote-wrapper .bn-editor {
+.font-mono .blocknote-wrapper .bn-editor,
+.font-mono .blocknote-wrapper .bn-container {
   font-family: var(--font-mono);
 }
