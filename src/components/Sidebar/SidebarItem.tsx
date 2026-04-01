@@ -95,38 +95,38 @@ export function SidebarItem({
   return (
     <div>
       <div
-        className={`group flex h-7 items-center gap-1 mx-1 rounded-[4px] cursor-pointer text-[13px] leading-[20px] transition-all ${
+        className={`group flex h-[27px] items-center gap-1 mx-1 rounded-[8px] cursor-pointer text-[13px] leading-[20px] transition-colors ${
           isActive
             ? "bg-notion-selected text-notion-text"
             : "text-notion-secondary hover:bg-notion-hover hover:text-notion-text"
         }`}
-        style={{ paddingLeft: `${depth * 12 + 6}px`, paddingRight: "6px" }}
+        style={{ paddingLeft: `${depth * 14 + 8}px`, paddingRight: "8px" }}
         onClick={() => onSelect(page.id)}
         onContextMenu={handleContextMenu}
       >
         {/* 展開/折りたたみ */}
         <button
           onClick={handleToggle}
-          className="flex-shrink-0 w-4 h-4 flex items-center justify-center rounded-[3px] opacity-0 group-hover:opacity-100 hover:bg-notion-hover transition-all"
+          className="flex-shrink-0 w-[18px] h-[18px] flex items-center justify-center rounded-[6px] text-notion-tertiary hover:bg-notion-hover hover:text-notion-text transition-colors"
         >
           <svg
-            width="8"
-            height="8"
-            viewBox="0 0 8 8"
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
             fill="currentColor"
             className={`transition-transform duration-150 ${expanded ? "rotate-90" : ""}`}
           >
-            <path d="M2 1L6 4L2 7Z" />
+            <path d="M3 1L8 5L3 9Z" />
           </svg>
         </button>
 
         {/* アイコン */}
-        <span className="flex-shrink-0 w-5 text-center text-[14px] leading-none opacity-90">
+        <span className="flex-shrink-0 w-[18px] text-center text-[14px] leading-none">
           {page.icon || "📄"}
         </span>
 
         {/* タイトル */}
-        <span className="truncate flex-1 font-[400]">
+        <span className="truncate flex-1 font-[500]">
           {page.title || "無題"}
         </span>
 
