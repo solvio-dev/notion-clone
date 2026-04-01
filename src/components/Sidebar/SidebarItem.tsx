@@ -95,19 +95,19 @@ export function SidebarItem({
   return (
     <div>
       <div
-        className={`group flex items-center gap-1.5 mx-1 px-2 py-1.5 rounded-md cursor-pointer text-[13px] leading-[1.2] transition-colors ${
+        className={`group flex h-7 items-center gap-1 mx-1 rounded-[4px] cursor-pointer text-[13px] leading-[20px] transition-all ${
           isActive
-            ? "bg-notion-selected/80 text-notion-text"
+            ? "bg-notion-selected text-notion-text"
             : "text-notion-secondary hover:bg-notion-hover hover:text-notion-text"
         }`}
-        style={{ paddingLeft: `${depth * 14 + 8}px` }}
+        style={{ paddingLeft: `${depth * 12 + 6}px`, paddingRight: "6px" }}
         onClick={() => onSelect(page.id)}
         onContextMenu={handleContextMenu}
       >
         {/* 展開/折りたたみ */}
         <button
           onClick={handleToggle}
-          className="flex-shrink-0 w-4 h-4 flex items-center justify-center rounded-sm opacity-40 group-hover:opacity-100 hover:bg-notion-hover transition-colors"
+          className="flex-shrink-0 w-4 h-4 flex items-center justify-center rounded-[3px] opacity-0 group-hover:opacity-100 hover:bg-notion-hover transition-all"
         >
           <svg
             width="8"
@@ -121,20 +121,20 @@ export function SidebarItem({
         </button>
 
         {/* アイコン */}
-        <span className="flex-shrink-0 w-5 text-center text-[14px] leading-none">
+        <span className="flex-shrink-0 w-5 text-center text-[14px] leading-none opacity-90">
           {page.icon || "📄"}
         </span>
 
         {/* タイトル */}
-        <span className="truncate flex-1 leading-normal">
+        <span className="truncate flex-1 font-[400]">
           {page.title || "無題"}
         </span>
 
         {/* アクションボタン（ホバー時表示） */}
-        <div className="hidden group-hover:flex items-center gap-0.5 flex-shrink-0">
+        <div className="flex items-center gap-0.5 flex-shrink-0 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-opacity">
           <button
             onClick={handleAddChild}
-            className="w-5 h-5 flex items-center justify-center rounded-[3px] hover:bg-notion-hover text-notion-secondary"
+            className="w-5 h-5 flex items-center justify-center rounded-[3px] text-notion-tertiary hover:text-notion-text hover:bg-notion-hover"
             title="サブページを追加"
           >
             <svg

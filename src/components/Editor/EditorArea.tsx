@@ -71,10 +71,10 @@ export function EditorArea({
 
   return (
     <div className={`flex-1 overflow-y-auto ${fontClass}`}>
-      <div className="max-w-[900px] mx-auto px-12 pt-10 pb-28">
+      <div className="max-w-[708px] mx-auto px-24 pt-9 pb-32">
         {/* カバー画像 */}
         {page.cover_image && (
-          <div className="w-full h-[200px] mb-6 -mx-16 rounded-none overflow-hidden">
+          <div className="h-[220px] mb-7 -mx-24 overflow-hidden">
             <img
               src={page.cover_image}
               alt=""
@@ -84,8 +84,8 @@ export function EditorArea({
         )}
 
         {/* アイコン */}
-        <div className="mb-1 -ml-1">
-          <button className="text-[52px] leading-none hover:bg-notion-hover rounded-[4px] p-1 transition-colors">
+        <div className="mb-1.5 -ml-1.5">
+          <button className="text-[50px] leading-none hover:bg-notion-hover rounded-[5px] p-1.5 transition-colors">
             {page.icon || "📄"}
           </button>
         </div>
@@ -97,7 +97,7 @@ export function EditorArea({
           onChange={(e) => onUpdateTitle(e.target.value)}
           onKeyDown={handleTitleKeyDown}
           placeholder="無題"
-          className="w-full text-[38px] font-[700] leading-[1.1] tracking-[-0.02em] bg-transparent border-none outline-none text-notion-text placeholder:text-notion-text/20 mb-3"
+          className="w-full text-[40px] font-[600] leading-[1.05] tracking-[-0.03em] bg-transparent border-none outline-none text-notion-text placeholder:text-notion-tertiary mb-3"
         />
 
         {/* BlockNoteエディタ */}

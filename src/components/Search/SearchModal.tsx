@@ -79,13 +79,17 @@ export function SearchModal({
       />
 
       {/* モーダル */}
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]">
+      <div className="fixed inset-0 z-50 flex items-start justify-center pt-[12vh]">
         <div
-          className="w-full max-w-[600px] bg-notion-bg border border-notion-border rounded-xl shadow-2xl overflow-hidden"
+          className="w-full max-w-[540px] bg-notion-bg rounded-xl overflow-hidden"
+          style={{
+            boxShadow:
+              "0 0 0 1px rgba(15, 15, 15, 0.05), 0 3px 6px rgba(15, 15, 15, 0.1), 0 9px 24px rgba(15, 15, 15, 0.2)",
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* 検索入力 */}
-          <div className="flex items-center px-4 py-3 border-b border-notion-border">
+          <div className="flex items-center px-5 py-3.5 border-b border-notion-border">
             <svg
               width="20"
               height="20"
@@ -120,12 +124,12 @@ export function SearchModal({
               }}
               onKeyDown={handleKeyDown}
               placeholder="ページを検索..."
-              className="flex-1 bg-transparent border-none outline-none text-notion-text placeholder:text-notion-secondary text-base"
+              className="flex-1 bg-transparent border-none outline-none text-notion-text placeholder:text-notion-secondary/60 text-[15px]"
             />
           </div>
 
           {/* 検索結果 */}
-          <div className="max-h-[400px] overflow-y-auto py-2">
+          <div className="max-h-[360px] overflow-y-auto py-1.5">
             {filteredPages.length === 0 ? (
               <div className="px-4 py-8 text-center text-notion-secondary text-sm">
                 ページが見つかりません
@@ -134,10 +138,10 @@ export function SearchModal({
               filteredPages.slice(0, 20).map((page, index) => (
                 <button
                   key={page.id}
-                  className={`w-full flex items-center gap-3 px-4 py-2 text-left text-sm transition-colors ${
+                  className={`w-full flex items-center gap-3 px-5 py-2 text-left text-[13px] transition-colors ${
                     index === selectedIndex
                       ? "bg-notion-hover text-notion-text"
-                      : "text-notion-secondary hover:bg-notion-hover"
+                      : "text-notion-text hover:bg-notion-hover"
                   }`}
                   onClick={() => {
                     onSelectPage(page.id);

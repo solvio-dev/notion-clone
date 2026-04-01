@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  /* Notionカラーパレット - ライトモード */
-  --color-notion-bg: #FFFFFF;
-  --color-notion-sidebar: #F7F6F3;
-  --color-notion-text: #37352F;
-  --color-notion-secondary: #787774;
-  --color-notion-border: #E9E9E7;
-  --color-notion-hover: #f1f1ef;
-  --color-notion-selected: #ebeae6;
+  /* Notionカラーパレット - ライトモード（rgba系で柔らかく） */
+  --color-notion-bg: #ffffff;
+  --color-notion-sidebar: #fbfbfa;
+  --color-notion-text: rgba(55, 53, 47, 0.88);
+  --color-notion-secondary: rgba(55, 53, 47, 0.65);
+  --color-notion-tertiary: rgba(55, 53, 47, 0.38);
+  --color-notion-border: rgba(55, 53, 47, 0.09);
+  --color-notion-hover: rgba(55, 53, 47, 0.04);
+  --color-notion-selected: rgba(55, 53, 47, 0.06);
 
   /* Notion 10色パレット - テキスト */
   --color-notion-gray: #787774;
@@ -41,12 +42,13 @@
 /* ダークモード */
 .dark {
   --color-notion-bg: #191919;
-  --color-notion-sidebar: #252525;
+  --color-notion-sidebar: #202020;
   --color-notion-text: rgba(255, 255, 255, 0.81);
   --color-notion-secondary: rgba(255, 255, 255, 0.44);
-  --color-notion-border: rgba(255, 255, 255, 0.094);
-  --color-notion-hover: rgba(255, 255, 255, 0.055);
-  --color-notion-selected: rgba(255, 255, 255, 0.094);
+  --color-notion-tertiary: rgba(255, 255, 255, 0.28);
+  --color-notion-border: rgba(255, 255, 255, 0.08);
+  --color-notion-hover: rgba(255, 255, 255, 0.04);
+  --color-notion-selected: rgba(255, 255, 255, 0.06);
 
   /* ダークモード 10色パレット - テキスト */
   --color-notion-gray: #979A9B;
@@ -86,8 +88,19 @@ html, body, #root {
 
 body {
   font-family: var(--font-sans);
+  letter-spacing: -0.003em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea {
+  transition:
+    background-color 140ms cubic-bezier(0.2, 0, 0, 1),
+    border-color 140ms cubic-bezier(0.2, 0, 0, 1),
+    color 140ms cubic-bezier(0.2, 0, 0, 1),
+    opacity 140ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 /* スクロールバー（Notion風） */
@@ -131,8 +144,8 @@ body {
 
 .blocknote-wrapper .bn-editor [class*="blockContent"] {
   font-size: 16px;
-  line-height: 1.55;
-  padding: 1px 0;
+  line-height: 1.5;
+  padding: 0;
 }
 
 /* 見出しサイズ - Notion準拠 */

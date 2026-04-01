@@ -40,15 +40,16 @@ export function TrashSection({ onRestore }: TrashSectionProps) {
     <div className="px-1">
       <button
         onClick={handleOpen}
-        className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm text-notion-secondary hover:bg-notion-hover hover:text-notion-text transition-colors"
+        className="w-full flex items-center gap-2 px-3 py-1.5 rounded-md text-[13px] text-notion-secondary hover:bg-notion-hover hover:text-notion-text transition-colors"
       >
         <svg
-          width="16"
-          height="16"
+          width="15"
+          height="15"
           viewBox="0 0 16 16"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
+          className="opacity-70"
         >
           <path d="M3 4h10M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1M6 7v5M10 7v5M4 4l1 9a1 1 0 001 1h4a1 1 0 001-1l1-9" />
         </svg>
@@ -56,34 +57,36 @@ export function TrashSection({ onRestore }: TrashSectionProps) {
       </button>
 
       {isOpen && (
-        <div className="mt-1 mx-1 border border-notion-border rounded-lg bg-notion-bg overflow-hidden">
+        <div className="mt-1.5 mx-1 rounded-lg bg-notion-bg overflow-hidden"
+          style={{
+            boxShadow: "0 0 0 1px rgba(15, 15, 15, 0.05), 0 3px 6px rgba(15, 15, 15, 0.1), 0 9px 24px rgba(15, 15, 15, 0.2)",
+          }}
+        >
           {deletedPages.length === 0 ? (
-            <div className="px-3 py-4 text-center text-xs text-notion-secondary">
+            <div className="px-4 py-5 text-center text-[12px] text-notion-secondary">
               ゴミ箱は空です
             </div>
           ) : (
-            <div className="max-h-[200px] overflow-y-auto">
+            <div className="max-h-[200px] overflow-y-auto py-1">
               {deletedPages.map((page) => (
                 <div
                   key={page.id}
-                  className="flex items-center justify-between px-3 py-2 text-sm hover:bg-notion-hover"
+                  className="flex items-center justify-between px-3 py-2 text-[13px] hover:bg-notion-hover transition-colors"
                 >
-                  <span className="flex items-center gap-2 truncate text-notion-secondary">
-                    <span>{page.icon || "📄"}</span>
-                    <span>{page.title || "無題"}</span>
+                  <span className="flex items-center gap-2 truncate text-notion-text">
+                    <span className="text-[14px]">{page.icon || "📄"}</span>
+                    <span className="truncate">{page.title || "無題"}</span>
                   </span>
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-2 flex-shrink-0 ml-2">
                     <button
                       onClick={() => handleRestore(page.id)}
-                      className="text-xs text-notion-blue hover:underline"
-                      title="復元"
+                      className="text-[12px] text-notion-blue hover:underline"
                     >
                       復元
                     </button>
                     <button
                       onClick={() => handlePermanentDelete(page.id)}
-                      className="text-xs text-notion-red hover:underline"
-                      title="完全削除"
+                      className="text-[12px] text-notion-red hover:underline"
                     >
                       削除
                     </button>
