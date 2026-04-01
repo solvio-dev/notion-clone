@@ -36,8 +36,8 @@ export function Sidebar({
       style={{ width: sidebarWidth }}
     >
       {/* ワークスペース名 */}
-      <div className="px-3 py-3 flex items-center gap-2">
-        <span className="text-[14px] font-medium text-notion-text truncate">
+      <div className="h-11 px-3 flex items-center">
+        <span className="text-[14px] font-[500] text-notion-text truncate">
           Notion Clone
         </span>
       </div>
@@ -45,7 +45,7 @@ export function Sidebar({
       {/* お気に入り */}
       {favorites.length > 0 && (
         <div className="px-1 pt-3 pb-1">
-          <div className="px-3 py-1 text-[12px] font-medium text-notion-secondary/80">
+          <div className="px-3 py-1 text-[11px] font-[500] text-notion-secondary">
             お気に入り
           </div>
           {favorites.map((page) => (
@@ -66,7 +66,7 @@ export function Sidebar({
 
       {/* ページ一覧 */}
       <div className="flex-1 overflow-y-auto px-1 pt-3">
-        <div className="px-3 py-1 text-[12px] font-medium text-notion-secondary/80 flex items-center justify-between">
+        <div className="px-3 py-1 text-[11px] font-[500] text-notion-secondary flex items-center justify-between">
           <span>ページ</span>
           <button
             onClick={handleAddRootPage}

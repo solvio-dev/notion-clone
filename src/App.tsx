@@ -184,8 +184,8 @@ function App() {
       {/* メイン領域 */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* ヘッダーバー */}
-        <div className="h-[44px] border-b border-notion-border/50 flex-shrink-0">
-          <div className="h-full max-w-[900px] mx-auto px-12 flex items-center justify-between">
+        <div className="h-[45px] border-b border-notion-border flex-shrink-0">
+          <div className="h-full max-w-[708px] mx-auto px-24 flex items-center justify-between">
             <div className="min-w-0 flex items-center gap-2 text-[13px] text-notion-secondary">
               {currentPage && (
                 <>
