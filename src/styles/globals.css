@@ -3,7 +3,7 @@
 @theme {
   /* Notionカラーパレット - ライトモード（rgba系で柔らかく） */
   --color-notion-bg: #ffffff;
-  --color-notion-sidebar: #fbfbfa;
+  --color-notion-sidebar: #f7f7f5;
   --color-notion-text: rgba(55, 53, 47, 0.88);
   --color-notion-secondary: rgba(55, 53, 47, 0.65);
   --color-notion-tertiary: rgba(55, 53, 47, 0.38);

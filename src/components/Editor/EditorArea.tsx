@@ -73,10 +73,10 @@ export function EditorArea({
 
   return (
     <div className={`flex-1 overflow-y-auto ${fontClass}`}>
-      <div className="max-w-[708px] mx-auto px-24 pt-9 pb-32">
+      <div className="max-w-[900px] mx-auto px-[96px] pt-[72px] pb-32">
         {/* カバー画像 */}
         {page.cover_image && (
-          <div className="h-[220px] mb-7 -mx-24 overflow-hidden">
+          <div className="h-[220px] mb-7 -mx-[96px] overflow-hidden">
             <img
               src={page.cover_image}
               alt=""
