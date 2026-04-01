@@ -6,20 +6,23 @@ authors = ["solvio-dev"]
 license = "MIT"
 repository = "https://github.com/solvio-dev/notion-clone"
 edition = "2021"
-rust-version = "1.77.2"
+rust-version = "1.80.0"
 
 [lib]
 name = "app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2" }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
 serde_json = "1"
 serde = { version = "1", features = ["derive"] }
 log = "0.4"
-tauri = { version = "2" }
+tauri = { version = "2", features = [] }
 tauri-plugin-log = "2"
 tauri-plugin-sql = { version = "2", features = ["sqlite"] }
 tauri-plugin-shell = "2"
+
+# Rust 1.80互換: time-macros 0.2.27+はedition2024が必要なため、timeをピン留め
+time = "=0.3.36"
