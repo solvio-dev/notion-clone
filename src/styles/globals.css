@@ -134,11 +134,14 @@ textarea {
 
 .blocknote-wrapper .bn-container {
   font-family: var(--font-sans);
+  --bn-colors-editor-background: transparent;
 }
 
 .blocknote-wrapper .bn-editor {
   font-family: var(--font-sans);
   color: var(--color-notion-text);
+  padding-inline: 0;
+  background-color: transparent;
 }
 
 .blocknote-wrapper .bn-editor [class*="blockContent"] {
