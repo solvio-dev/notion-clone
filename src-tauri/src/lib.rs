@@ -86,6 +86,7 @@ pub fn run() {
                 .add_migrations("sqlite:notion-clone.db", migrations)
                 .build(),
         )
+        .plugin(tauri_plugin_shell::init())
         .setup(|app| {
             if cfg!(debug_assertions) {
                 app.handle().plugin(
