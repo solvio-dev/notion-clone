@@ -23,7 +23,7 @@ export function Sidebar({
   onDeletePage,
   onRefresh,
 }: SidebarProps) {
-  const [sidebarWidth] = useState(260);
+  const [sidebarWidth] = useState(248);
 
   const handleAddRootPage = useCallback(async () => {
     const id = await onAddPage(null);
@@ -37,15 +37,15 @@ export function Sidebar({
     >
       {/* ワークスペース名 */}
       <div className="px-3 py-3 flex items-center gap-2">
-        <span className="text-sm font-semibold text-notion-text truncate">
+        <span className="text-[14px] font-medium text-notion-text truncate">
           Notion Clone
         </span>
       </div>
 
       {/* お気に入り */}
       {favorites.length > 0 && (
-        <div className="px-1 mb-1">
-          <div className="px-2 py-1 text-xs font-medium text-notion-secondary">
+        <div className="px-1 pt-3 pb-1">
+          <div className="px-3 py-1 text-[12px] font-medium text-notion-secondary/80">
             お気に入り
           </div>
           {favorites.map((page) => (
@@ -53,7 +53,7 @@ export function Sidebar({
               key={page.id}
               page={page}
               depth={0}
-              isActive={page.id === currentPageId}
+              currentPageId={currentPageId}
               onSelect={onSelectPage}
               onDelete={onDeletePage}
               onAddChild={onAddPage}
@@ -65,8 +65,8 @@ export function Sidebar({
       )}
 
       {/* ページ一覧 */}
-      <div className="flex-1 overflow-y-auto px-1">
-        <div className="px-2 py-1 text-xs font-medium text-notion-secondary flex items-center justify-between">
+      <div className="flex-1 overflow-y-auto px-1 pt-3">
+        <div className="px-3 py-1 text-[12px] font-medium text-notion-secondary/80 flex items-center justify-between">
           <span>ページ</span>
           <button
             onClick={handleAddRootPage}
@@ -91,7 +91,7 @@ export function Sidebar({
             key={page.id}
             page={page}
             depth={0}
-            isActive={page.id === currentPageId}
+            currentPageId={currentPageId}
             onSelect={onSelectPage}
             onDelete={onDeletePage}
             onAddChild={onAddPage}
@@ -99,15 +99,20 @@ export function Sidebar({
             onRefresh={onRefresh}
           />
         ))}
+        {pages.length === 0 && (
+          <div className="px-3 py-4 text-xs text-notion-secondary text-center">
+            ページがありません
+          </div>
+        )}
       </div>
 
       {/* 下部: ゴミ箱 + 新規ページ */}
-      <div className="py-2 border-t border-notion-border">
+      <div className="py-1.5 border-t border-notion-border">
         <TrashSection onRestore={onRefresh} />
         <div className="px-1">
           <button
             onClick={handleAddRootPage}
-            className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm text-notion-secondary hover:bg-notion-hover hover:text-notion-text transition-colors"
+            className="w-full flex items-center gap-2 px-3 py-1.5 rounded text-[13px] text-notion-secondary hover:bg-notion-hover hover:text-notion-text transition-colors"
           >
             <svg
               width="16"

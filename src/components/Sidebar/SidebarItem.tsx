@@ -5,7 +5,7 @@ import { updatePage, duplicatePage } from "../../services/database";
 interface SidebarItemProps {
   page: Page;
   depth: number;
-  isActive: boolean;
+  currentPageId: string | null;
   onSelect: (id: string) => void;
   onDelete: (id: string) => void;
   onAddChild: (parentId: string | null) => Promise<string>;
@@ -16,7 +16,7 @@ interface SidebarItemProps {
 export function SidebarItem({
   page,
   depth,
-  isActive,
+  currentPageId,
   onSelect,
   onDelete,
   onAddChild,
@@ -27,6 +27,8 @@ export function SidebarItem({
   const [children, setChildren] = useState<Page[]>([]);
   const [showMenu, setShowMenu] = useState(false);
   const [menuPos, setMenuPos] = useState({ x: 0, y: 0 });
+
+  const isActive = page.id === currentPageId;
 
   const handleToggle = useCallback(
     async (e: React.MouseEvent) => {
@@ -93,44 +95,46 @@ export function SidebarItem({
   return (
     <div>
       <div
-        className={`group flex items-center gap-1 px-2 py-1 rounded cursor-pointer text-sm transition-colors ${
+        className={`group flex items-center gap-1.5 mx-1 px-2 py-1.5 rounded-md cursor-pointer text-[13px] leading-[1.2] transition-colors ${
           isActive
-            ? "bg-notion-selected text-notion-text"
+            ? "bg-notion-selected/80 text-notion-text"
             : "text-notion-secondary hover:bg-notion-hover hover:text-notion-text"
         }`}
-        style={{ paddingLeft: `${depth * 16 + 8}px` }}
+        style={{ paddingLeft: `${depth * 14 + 8}px` }}
         onClick={() => onSelect(page.id)}
         onContextMenu={handleContextMenu}
       >
         {/* 展開/折りたたみ */}
         <button
           onClick={handleToggle}
-          className="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded hover:bg-notion-hover transition-colors"
+          className="flex-shrink-0 w-4 h-4 flex items-center justify-center rounded-sm opacity-40 group-hover:opacity-100 hover:bg-notion-hover transition-colors"
         >
           <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
+            width="8"
+            height="8"
+            viewBox="0 0 8 8"
             fill="currentColor"
-            className={`transition-transform ${expanded ? "rotate-90" : ""}`}
+            className={`transition-transform duration-150 ${expanded ? "rotate-90" : ""}`}
           >
-            <path d="M3 1L8 5L3 9Z" />
+            <path d="M2 1L6 4L2 7Z" />
           </svg>
         </button>
 
         {/* アイコン */}
-        <span className="flex-shrink-0 w-5 text-center">
+        <span className="flex-shrink-0 w-5 text-center text-[14px] leading-none">
           {page.icon || "📄"}
         </span>
 
         {/* タイトル */}
-        <span className="truncate flex-1">{page.title || "無題"}</span>
+        <span className="truncate flex-1 leading-normal">
+          {page.title || "無題"}
+        </span>
 
         {/* アクションボタン（ホバー時表示） */}
-        <div className="hidden group-hover:flex items-center gap-0.5">
+        <div className="hidden group-hover:flex items-center gap-0.5 flex-shrink-0">
           <button
             onClick={handleAddChild}
-            className="w-5 h-5 flex items-center justify-center rounded hover:bg-notion-hover"
+            className="w-5 h-5 flex items-center justify-center rounded-[3px] hover:bg-notion-hover text-notion-secondary"
             title="サブページを追加"
           >
             <svg
@@ -161,20 +165,20 @@ export function SidebarItem({
           >
             <button
               onClick={handleToggleFavorite}
-              className="w-full text-left px-3 py-1.5 text-sm text-notion-text hover:bg-notion-hover"
+              className="w-full text-left px-3 py-1.5 text-[13px] text-notion-text hover:bg-notion-hover"
             >
               {page.is_favorite ? "お気に入りから削除" : "お気に入りに追加"}
             </button>
             <button
               onClick={handleDuplicate}
-              className="w-full text-left px-3 py-1.5 text-sm text-notion-text hover:bg-notion-hover"
+              className="w-full text-left px-3 py-1.5 text-[13px] text-notion-text hover:bg-notion-hover"
             >
               複製
             </button>
             <div className="border-t border-notion-border my-1" />
             <button
               onClick={handleDelete}
-              className="w-full text-left px-3 py-1.5 text-sm text-notion-red hover:bg-notion-hover"
+              className="w-full text-left px-3 py-1.5 text-[13px] text-notion-red hover:bg-notion-hover"
             >
               削除
             </button>
@@ -189,7 +193,7 @@ export function SidebarItem({
             key={child.id}
             page={child}
             depth={depth + 1}
-            isActive={child.id === (isActive ? page.id : "")}
+            currentPageId={currentPageId}
             onSelect={onSelect}
             onDelete={onDelete}
             onAddChild={onAddChild}
