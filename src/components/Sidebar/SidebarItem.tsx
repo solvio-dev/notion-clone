@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import type { Page } from "../../types";
+import { updatePage, duplicatePage } from "../../services/database";
 
 interface SidebarItemProps {
   page: Page;
@@ -9,6 +10,7 @@ interface SidebarItemProps {
   onDelete: (id: string) => void;
   onAddChild: (parentId: string | null) => Promise<string>;
   getChildren: (parentId: string) => Promise<Page[]>;
+  onRefresh?: () => void;
 }
 
 export function SidebarItem({
@@ -19,10 +21,12 @@ export function SidebarItem({
   onDelete,
   onAddChild,
   getChildren,
+  onRefresh,
 }: SidebarItemProps) {
   const [expanded, setExpanded] = useState(false);
   const [children, setChildren] = useState<Page[]>([]);
   const [showMenu, setShowMenu] = useState(false);
+  const [menuPos, setMenuPos] = useState({ x: 0, y: 0 });
 
   const handleToggle = useCallback(
     async (e: React.MouseEvent) => {
@@ -57,8 +61,32 @@ export function SidebarItem({
     [onDelete, page.id],
   );
 
+  const handleToggleFavorite = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      await updatePage(page.id, {
+        is_favorite: page.is_favorite ? 0 : 1,
+      });
+      setShowMenu(false);
+      onRefresh?.();
+    },
+    [page.id, page.is_favorite, onRefresh],
+  );
+
+  const handleDuplicate = useCallback(
+    async (e: React.MouseEvent) => {
+      e.stopPropagation();
+      const newId = await duplicatePage(page.id);
+      setShowMenu(false);
+      onRefresh?.();
+      onSelect(newId);
+    },
+    [page.id, onRefresh, onSelect],
+  );
+
   const handleContextMenu = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
+    setMenuPos({ x: e.clientX, y: e.clientY });
     setShowMenu(true);
   }, []);
 
@@ -96,9 +124,7 @@ export function SidebarItem({
         </span>
 
         {/* タイトル */}
-        <span className="truncate flex-1">
-          {page.title || "無題"}
-        </span>
+        <span className="truncate flex-1">{page.title || "無題"}</span>
 
         {/* アクションボタン（ホバー時表示） */}
         <div className="hidden group-hover:flex items-center gap-0.5">
@@ -129,7 +155,23 @@ export function SidebarItem({
             className="fixed inset-0 z-40"
             onClick={() => setShowMenu(false)}
           />
-          <div className="absolute z-50 bg-notion-bg border border-notion-border rounded-lg shadow-lg py-1 min-w-[160px]">
+          <div
+            className="fixed z-50 bg-notion-bg border border-notion-border rounded-lg shadow-lg py-1 min-w-[180px]"
+            style={{ left: menuPos.x, top: menuPos.y }}
+          >
+            <button
+              onClick={handleToggleFavorite}
+              className="w-full text-left px-3 py-1.5 text-sm text-notion-text hover:bg-notion-hover"
+            >
+              {page.is_favorite ? "お気に入りから削除" : "お気に入りに追加"}
+            </button>
+            <button
+              onClick={handleDuplicate}
+              className="w-full text-left px-3 py-1.5 text-sm text-notion-text hover:bg-notion-hover"
+            >
+              複製
+            </button>
+            <div className="border-t border-notion-border my-1" />
             <button
               onClick={handleDelete}
               className="w-full text-left px-3 py-1.5 text-sm text-notion-red hover:bg-notion-hover"
@@ -147,11 +189,12 @@ export function SidebarItem({
             key={child.id}
             page={child}
             depth={depth + 1}
-            isActive={isActive}
+            isActive={child.id === (isActive ? page.id : "")}
             onSelect={onSelect}
             onDelete={onDelete}
             onAddChild={onAddChild}
             getChildren={getChildren}
+            onRefresh={onRefresh}
           />
         ))}
     </div>

@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import type { Page } from "../../types";
 import { SidebarItem } from "./SidebarItem";
+import { TrashSection } from "./TrashSection";
 import { getChildPages } from "../../services/database";
 
 interface SidebarProps {
@@ -10,6 +11,7 @@ interface SidebarProps {
   onSelectPage: (id: string) => void;
   onAddPage: (parentId?: string | null) => Promise<string>;
   onDeletePage: (id: string) => void;
+  onRefresh: () => void;
 }
 
 export function Sidebar({
@@ -19,6 +21,7 @@ export function Sidebar({
   onSelectPage,
   onAddPage,
   onDeletePage,
+  onRefresh,
 }: SidebarProps) {
   const [sidebarWidth] = useState(260);
 
@@ -55,6 +58,7 @@ export function Sidebar({
               onDelete={onDeletePage}
               onAddChild={onAddPage}
               getChildren={getChildPages}
+              onRefresh={onRefresh}
             />
           ))}
         </div>
@@ -92,29 +96,33 @@ export function Sidebar({
             onDelete={onDeletePage}
             onAddChild={onAddPage}
             getChildren={getChildPages}
+            onRefresh={onRefresh}
           />
         ))}
       </div>
 
-      {/* 下部: 新規ページ */}
-      <div className="px-1 py-2 border-t border-notion-border">
-        <button
-          onClick={handleAddRootPage}
-          className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm text-notion-secondary hover:bg-notion-hover hover:text-notion-text transition-colors"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
+      {/* 下部: ゴミ箱 + 新規ページ */}
+      <div className="py-2 border-t border-notion-border">
+        <TrashSection onRestore={onRefresh} />
+        <div className="px-1">
+          <button
+            onClick={handleAddRootPage}
+            className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-sm text-notion-secondary hover:bg-notion-hover hover:text-notion-text transition-colors"
           >
-            <line x1="8" y1="3" x2="8" y2="13" />
-            <line x1="3" y1="8" x2="13" y2="8" />
-          </svg>
-          新規ページ
-        </button>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <line x1="8" y1="3" x2="8" y2="13" />
+              <line x1="3" y1="8" x2="13" y2="8" />
+            </svg>
+            新規ページ
+          </button>
+        </div>
       </div>
     </aside>
   );

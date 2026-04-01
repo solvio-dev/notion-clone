@@ -93,6 +93,52 @@ export async function getFavoritePages(): Promise<Page[]> {
   );
 }
 
+// ゴミ箱操作
+export async function getDeletedPages(): Promise<Page[]> {
+  const database = await getDb();
+  return database.select<Page[]>(
+    "SELECT * FROM pages WHERE is_deleted = 1 ORDER BY updated_at DESC",
+  );
+}
+
+export async function restorePage(id: string): Promise<void> {
+  const database = await getDb();
+  await database.execute(
+    "UPDATE pages SET is_deleted = 0, updated_at = datetime('now') WHERE id = ?",
+    [id],
+  );
+}
+
+export async function permanentlyDeletePage(id: string): Promise<void> {
+  const database = await getDb();
+  await database.execute("DELETE FROM blocks WHERE page_id = ?", [id]);
+  await database.execute("DELETE FROM pages WHERE id = ?", [id]);
+}
+
+// ページ複製
+export async function duplicatePage(sourceId: string): Promise<string> {
+  const database = await getDb();
+  const source = await getPageById(sourceId);
+  if (!source) throw new Error("ページが見つかりません");
+
+  const newId = crypto.randomUUID();
+  await database.execute(
+    "INSERT INTO pages (id, title, icon, cover_image, parent_id, position, font_style) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    [newId, source.title + " (コピー)", source.icon, source.cover_image, source.parent_id, source.position + 1, source.font_style],
+  );
+
+  const content = await getPageContent(sourceId);
+  if (content) {
+    const blockId = crypto.randomUUID();
+    await database.execute(
+      "INSERT INTO blocks (id, page_id, type, content, position) VALUES (?, ?, 'document', ?, 0)",
+      [blockId, newId, content],
+    );
+  }
+
+  return newId;
+}
+
 // ブロック操作
 export async function getPageContent(pageId: string): Promise<string | null> {
   const database = await getDb();
