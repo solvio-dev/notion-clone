@@ -57,8 +57,14 @@ export function EditorArea({
     );
   }
 
+  const fontClass = page.font_style === "serif"
+    ? "font-serif"
+    : page.font_style === "mono"
+      ? "font-mono"
+      : "";
+
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className={`flex-1 overflow-y-auto ${fontClass}`}>
       <div className="max-w-[900px] mx-auto px-24 py-20">
         {/* カバー画像 */}
         {page.cover_image && (
