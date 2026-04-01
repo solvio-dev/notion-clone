@@ -139,13 +139,12 @@ textarea {
 .blocknote-wrapper .bn-editor {
   font-family: var(--font-sans);
   color: var(--color-notion-text);
-  padding: 0;
 }
 
 .blocknote-wrapper .bn-editor [class*="blockContent"] {
   font-size: 16px;
   line-height: 1.5;
-  padding: 0;
+  padding: 3px 2px;
 }
 
 /* 見出しサイズ - Notion準拠 */

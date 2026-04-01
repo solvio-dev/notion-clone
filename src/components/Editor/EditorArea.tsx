@@ -9,6 +9,7 @@ interface EditorAreaProps {
   loading: boolean;
   onUpdateTitle: (title: string) => void;
   onUpdateContent: (content: PartialBlock[]) => void;
+  onCreateSubPage?: () => void;
   initialContent: PartialBlock[];
 }
 
@@ -18,6 +19,7 @@ export function EditorArea({
   loading,
   onUpdateTitle,
   onUpdateContent,
+  onCreateSubPage,
   initialContent,
 }: EditorAreaProps) {
   const editorRef = useRef<BlockNoteEditor | null>(null);
@@ -106,6 +108,7 @@ export function EditorArea({
           initialContent={initialContent}
           onChange={onUpdateContent}
           onReady={handleEditorReady}
+          onCreateSubPage={onCreateSubPage}
           theme={theme}
         />
       </div>
