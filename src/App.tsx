@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { PartialBlock } from "@blocknote/core";
 import { Sidebar } from "./components/Sidebar";
 import { EditorArea } from "./components/Editor";
+import { SearchModal } from "./components/Search";
 import { useTheme } from "./hooks/useTheme";
 import { usePages } from "./hooks/usePages";
 import {
@@ -23,8 +24,9 @@ function App() {
   const [pageLoading, setPageLoading] = useState(false);
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [recentPageIds, setRecentPageIds] = useState<string[]>([]);
 
-  // タイトルとコンテンツで別々のデバウンスタイマー
   const titleSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const contentSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const savedStatusTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -34,6 +36,18 @@ function App() {
     if (savedStatusTimerRef.current) clearTimeout(savedStatusTimerRef.current);
     savedStatusTimerRef.current = setTimeout(() => setSaveStatus("idle"), 2000);
   }, []);
+
+  // ページ選択＋最近のページトラッキング
+  const handleSelectPage = useCallback(
+    (id: string) => {
+      setCurrentPageId(id);
+      setRecentPageIds((prev) => {
+        const filtered = prev.filter((pid) => pid !== id);
+        return [id, ...filtered].slice(0, 20);
+      });
+    },
+    [],
+  );
 
   // ページ選択時にデータ取得（レースコンディション防止）
   useEffect(() => {
@@ -73,7 +87,7 @@ function App() {
     };
   }, [currentPageId]);
 
-  // タイトル更新（独立デバウンス）
+  // タイトル更新
   const handleUpdateTitle = useCallback(
     (title: string) => {
       if (!currentPageId) return;
@@ -95,7 +109,7 @@ function App() {
     [currentPageId, refresh, showSaved],
   );
 
-  // コンテンツ更新（独立デバウンス）
+  // コンテンツ更新
   const handleUpdateContent = useCallback(
     (content: PartialBlock[]) => {
       if (!currentPageId) return;
@@ -118,6 +132,11 @@ function App() {
   // グローバルキーボードショートカット
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      // Cmd+P / Cmd+K: 検索
+      if (e.metaKey && !e.shiftKey && (e.key === "p" || e.key === "k")) {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
       // Cmd+Shift+L: ダークモード切替
       if (e.metaKey && e.shiftKey && e.key === "l") {
         e.preventDefault();
@@ -126,7 +145,7 @@ function App() {
       // Cmd+N: 新規ページ
       if (e.metaKey && !e.shiftKey && !e.altKey && e.key === "n") {
         e.preventDefault();
-        addPage(null).then(setCurrentPageId);
+        addPage(null).then(handleSelectPage);
       }
       // Cmd+`: ターミナル開閉
       if (e.metaKey && e.key === "`") {
@@ -136,7 +155,7 @@ function App() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [toggleTheme, addPage]);
+  }, [toggleTheme, addPage, handleSelectPage]);
 
   if (!loaded) {
     return (
@@ -153,9 +172,10 @@ function App() {
         pages={pages}
         favorites={favorites}
         currentPageId={currentPageId}
-        onSelectPage={setCurrentPageId}
+        onSelectPage={handleSelectPage}
         onAddPage={addPage}
         onDeletePage={removePage}
+        onRefresh={refresh}
       />
 
       {/* メイン領域 */}
@@ -201,6 +221,17 @@ function App() {
           </div>
         )}
       </div>
+
+      {/* 検索モーダル */}
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onSelectPage={(id) => {
+          handleSelectPage(id);
+          setSearchOpen(false);
+        }}
+        recentPageIds={recentPageIds}
+      />
     </div>
   );
 }
