@@ -1,5 +1,5 @@
 import Database from "@tauri-apps/plugin-sql";
-import type { Page, Setting } from "../types";
+import type { Page, Block, Setting } from "../types";
 
 let db: Database | null = null;
 
@@ -90,6 +90,31 @@ export async function getFavoritePages(): Promise<Page[]> {
   const database = await getDb();
   return database.select<Page[]>(
     "SELECT * FROM pages WHERE is_favorite = 1 AND is_deleted = 0 ORDER BY position ASC",
+  );
+}
+
+// ブロック操作
+export async function getPageContent(pageId: string): Promise<string | null> {
+  const database = await getDb();
+  const rows = await database.select<Block[]>(
+    "SELECT * FROM blocks WHERE page_id = ? ORDER BY position ASC LIMIT 1",
+    [pageId],
+  );
+  return rows[0]?.content ?? null;
+}
+
+export async function savePageContent(
+  pageId: string,
+  content: string,
+): Promise<void> {
+  const database = await getDb();
+  const id = crypto.randomUUID();
+  await database.execute(
+    `INSERT INTO blocks (id, page_id, type, content, position)
+     VALUES (?, ?, 'document', ?, 0)
+     ON CONFLICT(page_id, position)
+     DO UPDATE SET content = excluded.content, updated_at = datetime('now')`,
+    [id, pageId, content],
   );
 }
 

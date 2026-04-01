@@ -113,3 +113,37 @@ body {
 ::selection {
   background: rgba(45, 170, 219, 0.3);
 }
+
+/* BlockNote カスタマイズ - Notion風 */
+.blocknote-wrapper {
+  min-height: 200px;
+}
+
+.blocknote-wrapper .bn-editor {
+  font-family: var(--font-sans);
+  color: var(--color-notion-text);
+}
+
+.blocknote-wrapper .bn-editor [class*="blockContent"] {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* BlockNoteのサイドメニュー（ドラッグハンドル） */
+.blocknote-wrapper .bn-side-menu {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.blocknote-wrapper [class*="blockOuter"]:hover .bn-side-menu {
+  opacity: 1;
+}
+
+/* フォントスタイル切替 */
+.font-serif .blocknote-wrapper .bn-editor {
+  font-family: var(--font-serif);
+}
+
+.font-mono .blocknote-wrapper .bn-editor {
+  font-family: var(--font-mono);
+}

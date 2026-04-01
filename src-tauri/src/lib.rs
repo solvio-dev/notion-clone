@@ -69,6 +69,15 @@ pub fn run() {
             "#,
             kind: MigrationKind::Up,
         },
+        Migration {
+            version: 2,
+            description: "blocksテーブルにUNIQUE制約追加",
+            sql: r#"
+                CREATE UNIQUE INDEX IF NOT EXISTS idx_blocks_page_position
+                ON blocks(page_id, position);
+            "#,
+            kind: MigrationKind::Up,
+        },
     ];
 
     tauri::Builder::default()
