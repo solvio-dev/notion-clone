@@ -3,6 +3,7 @@ import { PartialBlock } from "@blocknote/core";
 import { Sidebar } from "./components/Sidebar";
 import { EditorArea } from "./components/Editor";
 import { SearchModal } from "./components/Search";
+import { GitHubPanel } from "./components/GitHub";
 import { useTheme } from "./hooks/useTheme";
 import { usePages } from "./hooks/usePages";
 import {
@@ -25,6 +26,7 @@ function App() {
   const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
   const [terminalOpen, setTerminalOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [githubOpen, setGithubOpen] = useState(false);
   const [recentPageIds, setRecentPageIds] = useState<string[]>([]);
 
   const titleSaveRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -180,16 +182,25 @@ function App() {
 
       {/* メイン領域 */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* 保存ステータスバー */}
-        {currentPage && (
-          <div className="flex items-center justify-end px-4 py-1 text-xs text-notion-secondary border-b border-notion-border">
+        {/* ツールバー */}
+        <div className="flex items-center justify-between px-4 py-1 text-xs text-notion-secondary border-b border-notion-border">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setGithubOpen(true)}
+              className="hover:text-notion-text transition-colors"
+              title="GitHub連携"
+            >
+              GitHub
+            </button>
+          </div>
+          <div>
             {saveStatus === "saving" && <span>保存中...</span>}
             {saveStatus === "saved" && <span>保存済み</span>}
             {saveStatus === "error" && (
               <span className="text-notion-red">保存エラー</span>
             )}
           </div>
-        )}
+        </div>
 
         {/* エディタ */}
         <EditorArea
@@ -231,6 +242,15 @@ function App() {
           setSearchOpen(false);
         }}
         recentPageIds={recentPageIds}
+      />
+
+      {/* GitHub連携パネル */}
+      <GitHubPanel
+        isOpen={githubOpen}
+        onClose={() => setGithubOpen(false)}
+        currentPageId={currentPageId}
+        onRefresh={refresh}
+        onSelectPage={handleSelectPage}
       />
     </div>
   );
