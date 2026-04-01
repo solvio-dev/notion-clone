@@ -224,6 +224,11 @@ function App() {
           loading={pageLoading}
           onUpdateTitle={handleUpdateTitle}
           onUpdateContent={handleUpdateContent}
+          onCreateSubPage={
+            currentPageId
+              ? () => addPage(currentPageId).then(handleSelectPage)
+              : undefined
+          }
           initialContent={initialContent}
         />
 
