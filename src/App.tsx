@@ -4,6 +4,7 @@ import { Sidebar } from "./components/Sidebar";
 import { EditorArea } from "./components/Editor";
 import { SearchModal } from "./components/Search";
 import { GitHubPanel } from "./components/GitHub";
+import { TerminalPanel } from "./components/Terminal";
 import { useTheme } from "./hooks/useTheme";
 import { usePages } from "./hooks/usePages";
 import {
@@ -213,24 +214,11 @@ function App() {
         />
 
         {/* ターミナルパネル */}
-        {terminalOpen && (
-          <div className="h-[300px] border-t border-notion-border bg-notion-bg flex-shrink-0">
-            <div className="flex items-center justify-between px-4 py-2 border-b border-notion-border">
-              <span className="text-xs font-medium text-notion-secondary">
-                ターミナル
-              </span>
-              <button
-                onClick={() => setTerminalOpen(false)}
-                className="text-notion-secondary hover:text-notion-text text-xs"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="p-4 text-sm text-notion-secondary font-mono">
-              ターミナル（M5で実装予定）
-            </div>
-          </div>
-        )}
+        <TerminalPanel
+          isOpen={terminalOpen}
+          onClose={() => setTerminalOpen(false)}
+          theme={theme}
+        />
       </div>
 
       {/* 検索モーダル */}
